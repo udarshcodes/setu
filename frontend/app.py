@@ -160,13 +160,15 @@ with tab1:
                     try:
                         response = requests.post(
                             f"{BACKEND_URL}/chat", 
-                            data={"text": user_query, "language_override": language_override}
+                            data={"text": user_query, "language_override": language_override}, timeout=30
                         )
                         if response.status_code == 200:
                             st.success("Response Generated:")
                             st.write(response.json().get("response", "No response returned."))
                         else:
                             st.error(f"Error connecting to backend: {response.text}")
+                    except requests.Timeout:
+                        st.error("The backend took too long to respond. Please try again.")
                     except Exception as e:
                         st.error(f"Failed to connect to backend API: {e}")
             else:
@@ -200,12 +202,14 @@ with tab2:
                         files["image"] = (final_image.name, final_image.getvalue(), final_image.type)
                         
                     try:
-                        response = requests.post(f"{BACKEND_URL}/chat", data=data, files=files)
+                        response = requests.post(f"{BACKEND_URL}/chat", data=data, files=files, timeout=30)
                         if response.status_code == 200:
                             st.success("Analysis Complete:")
                             st.write(response.json().get("response", "No response returned."))
                         else:
                             st.error(f"Error connecting to backend: {response.text}")
+                    except requests.Timeout:
+                        st.error("The backend took too long to respond. Please try again.")
                     except Exception as e:
                         st.error(f"Failed to connect to backend API: {e}")
             else:
