@@ -160,7 +160,7 @@ with tab1:
                     try:
                         response = requests.post(
                             f"{BACKEND_URL}/chat", 
-                            data={"text": user_query, "language_override": language_override}
+                            data={"text": user_query, "language_override": language_override}, timeout=30
                         )
                         if response.status_code == 200:
                             st.success("Response Generated:")
