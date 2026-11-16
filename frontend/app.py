@@ -160,8 +160,7 @@ with tab1:
                     try:
                         response = requests.post(
                             f"{BACKEND_URL}/chat", 
-                            data={"text": user_query, "language_override": language_override}
-                        )
+                            data={"text": user_query, "language_override": language_override}, timeout=30)
                         if response.status_code == 200:
                             st.success("Response Generated:")
                             st.write(response.json().get("response", "No response returned."))
@@ -200,7 +199,7 @@ with tab2:
                         files["image"] = (final_image.name, final_image.getvalue(), final_image.type)
                         
                     try:
-                        response = requests.post(f"{BACKEND_URL}/chat", data=data, files=files)
+                        response = requests.post(f"{BACKEND_URL}/chat", data=data, files=files, timeout=30)
                         if response.status_code == 200:
                             st.success("Analysis Complete:")
                             st.write(response.json().get("response", "No response returned."))
