@@ -7,7 +7,7 @@ import tempfile
 sys.path.insert(0, os.path.abspath('.'))
 
 from app.main import app
-import app.gemma_client as gc
+
 
 client = TestClient(app)
 
